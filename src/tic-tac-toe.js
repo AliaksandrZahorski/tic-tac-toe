@@ -30,25 +30,38 @@ class TicTacToe {
     nextTurn(rowIndex, columnIndex) {
       if (!this.getFieldValue(rowIndex, columnIndex)) {
         this.moves[this._toIndex(rowIndex, columnIndex)] = this.activePlayer;
-        this.isFinished();
         this._changePlayer();
       }
     }
 
     isFinished() {
       for (let i = 0; i < this.winningCombinations.length; i++) {
-        if (this.moves[this.winningCombinations[i][0]] == this.activePlayer &&
-           this.moves[this.winningCombinations[i][1]] == this.activePlayer &&
-           this.moves[this.winningCombinations[i][2]] == this.activePlayer) {
-             this.winner = this.activePlayer;
+        if (this.moves[this.winningCombinations[i][0]] == "x" &&
+           this.moves[this.winningCombinations[i][1]] == "x" &&
+           this.moves[this.winningCombinations[i][2]] == "x") {
+             this.winner = "x";
              return true;
         }
+      }
+      for (let i = 0; i < this.winningCombinations.length; i++) {
+        if (this.moves[this.winningCombinations[i][0]] == "o" &&
+           this.moves[this.winningCombinations[i][1]] == "o" &&
+           this.moves[this.winningCombinations[i][2]] == "o") {
+             this.winner = "o";
+             return true;
+        }
+      }
+      if (this.noMoreTurns()) {
+        return true;
       }
       return false;
     }
 
     getWinner() {
-      return this.winner;
+      if (this.isFinished()) {
+        return this.winner;
+      }
+      return null;
     }
 
     noMoreTurns() {
